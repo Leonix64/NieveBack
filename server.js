@@ -1,22 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Importa cors
-const userRoutes = require('./routes/userRoutes');
+const cors = require('cors');
+
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware para habilitar CORS
+// Middleware
 app.use(cors());
+app.use(bodyParser.json({ limit: '100mb', extended: true }));
 
-// Middleware para parsear el cuerpo de las solicitudes
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// [ Rutas ] //
+app.use('/auth', authRoutes);
 
-// Rutas
-app.use('/api', userRoutes);
-
-// Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+    console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });
